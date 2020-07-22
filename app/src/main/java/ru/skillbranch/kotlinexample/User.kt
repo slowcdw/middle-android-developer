@@ -36,9 +36,7 @@ class User private constructor(
         }
         get() = _login!!
 
-    private val salt: String by lazy {
-        ByteArray(16).also { SecureRandom().nextBytes(it) }.toString()
-    }
+    internal var salt: String = ""
     internal lateinit var passwordHash: String
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -66,10 +64,28 @@ class User private constructor(
     ): this(firstName, lastName, rawPhone = rawPhone, meta = mapOf("auth" to "sms")){
         println("Secondary phone constructor")
         val code = generateAccessCode()
+        println(code)
+
         passwordHash = encrypt(code)
         accessCode = code
+        println(passwordHash)
+        println(accessCode)
         sendAccessCodeToUser(rawPhone, code)
     }
+/*
+
+    constructor(
+        firstName: String,
+        lastName: String?,
+        email: String?,
+        salt: String,
+        hash: String,
+        phone: String?
+    ) : this(firstName, lastName, email, rawPhone = phone, meta = mapOf("src" to "csv")){
+        println("Secondary csv constructor")
+
+    }
+*/
 
 
     init{
@@ -80,7 +96,8 @@ class User private constructor(
 
         phone = rawPhone
         login = email ?: phone!!
-
+        println("phone: $phone")
+        println("login: $login")
         userInfo = """
             firstName: $firstName
             lastName: $lastName
@@ -100,7 +117,16 @@ class User private constructor(
         else throw IllegalArgumentException("The entered password does not match the current password")
     }
 
-    internal fun encrypt(password: String): String = salt.plus(password).md5()
+    internal fun encrypt(password: String): String {
+        salt = getSalt()
+        return salt.plus(password).md5()
+    }
+
+    private fun getSalt(): String {
+        return if (salt.isNullOrBlank()){
+            ByteArray(16).also { SecureRandom().nextBytes(it) }.toString()
+        }else salt
+    }
 
     internal fun generateAccessCode(): String {
         val possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
@@ -132,8 +158,10 @@ class User private constructor(
             phone: String? = null
         ): User{
             val (firstName, lastName) = fullName.fullNameToPair()
-
+            println("1. $fullName")
+            println(phone)
             return when {
+//                !salt.isNullOrBlank() && !hash.isNullOrBlank() -> User(firstName, lastName, email, salt, hash, phone)
                 !phone.isNullOrBlank() -> User(firstName,lastName,phone)
                 !email.isNullOrBlank() && !password.isNullOrBlank() -> User(firstName, lastName, email, password)
                 else -> throw IllegalArgumentException("Email or phone must be not null")
@@ -153,5 +181,6 @@ class User private constructor(
                 }
         }
     }
+
 
 }
