@@ -71,20 +71,24 @@ object UserHolder {
         var user: User
         for (i in list.indices){
             attrUser = list[i].split(";")
-            if (!attrUser[1].isNullOrBlank()){
-                user = registerUser(attrUser[0], attrUser[1],"1234")
-                    .apply {
-                        salt = attrUser[2].split(":")[0]
-                        passwordHash = attrUser[2].split(":")[1]
-                    }
-                    .also { users.add(it) }
-            }else if (!attrUser[3].isNullOrBlank()){
-                user = registerUserByPhone(attrUser[0], attrUser[3])
-                    .apply {
-                        salt = attrUser[2].split(":")[0]
-                        passwordHash = attrUser[2].split(":")[1]
-                    }
-                    .also { users.add(it) }
+            try {
+                if (!attrUser[1].isNullOrBlank()){
+                    user = registerUser(attrUser[0], attrUser[1],"1234")
+                        .apply {
+                            salt = attrUser[2].split(":")[0]
+                            passwordHash = attrUser[2].split(":")[1]
+                        }
+                        .also { users.add(it) }
+                }else if (!attrUser[3].isNullOrBlank()){
+                    user = registerUserByPhone(attrUser[0], attrUser[3])
+                        .apply {
+                            salt = attrUser[2].split(":")[0]
+                            passwordHash = attrUser[2].split(":")[1]
+                        }
+                        .also { users.add(it) }
+                }
+            }catch (e: Exception){
+
             }
         }
         return users
