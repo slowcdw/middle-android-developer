@@ -13,7 +13,7 @@ class User private constructor(
     private val lastName: String?,
     email: String? = null,
     rawPhone: String? = null,
-    meta: Map<String, Any>? = null
+    var meta: Map<String, Any>? = null
 ) {
 
     val userInfo : String

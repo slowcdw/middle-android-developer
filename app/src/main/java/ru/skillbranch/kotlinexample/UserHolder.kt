@@ -77,6 +77,7 @@ object UserHolder {
                         .apply {
                             salt = attrUser[2].split(":")[0]
                             passwordHash = attrUser[2].split(":")[1]
+                            meta = mapOf("src" to "csv")
                         }
                         .also { users.add(it) }
                 }else if (!attrUser[3].isNullOrBlank()){
@@ -84,6 +85,7 @@ object UserHolder {
                         .apply {
                             salt = attrUser[2].split(":")[0]
                             passwordHash = attrUser[2].split(":")[1]
+                            meta = mapOf("src" to "csv")
                         }
                         .also { users.add(it) }
                 }
