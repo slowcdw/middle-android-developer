@@ -9,9 +9,11 @@ object UserHolder {
     fun registerUser(
         fullName: String,
         email: String,
-        password:String
+        password:String,
+        salt: String? = null,
+        hash: String? = null
     ): User{
-        val user = User.makeUser(fullName, email=email, password = password)
+        val user = User.makeUser(fullName, salt = salt, hash = hash, email=email, password = password)
         if (map.containsKey(user.login)) throw IllegalArgumentException("A user with this email already exists")
         map[user.login] = user
         return user
@@ -19,7 +21,7 @@ object UserHolder {
 //            .also { user -> map[user.login] = user }
     }
 
-    fun registerUserByPhone(fullName: String, rawPhone: String): User{
+    fun registerUserByPhone(fullName: String, rawPhone: String, salt: String? = null, hash: String? = null): User{
         val regex = Regex(pattern = "[A-Za-zА-Яа-я]")
         val regex2 = Regex(pattern = "^[^+]")
         val _phone = rawPhone.replace("""[^\d]""".toRegex(), "")
@@ -28,7 +30,7 @@ object UserHolder {
         }
         println(fullName)
         println(rawPhone)
-        val user = User.makeUser(fullName, phone = rawPhone)
+        val user = User.makeUser(fullName, salt = salt, hash = hash, phone = rawPhone)
         if (map.containsKey(user.login)) throw IllegalArgumentException("A user with this phone already exists")
         map[user.login] = user
         return user
@@ -73,20 +75,10 @@ object UserHolder {
             attrUser = list[i].split(";")
             try {
                 if (!attrUser[1].isNullOrBlank()){
-                    user = registerUser(attrUser[0], attrUser[1],"1234")
-                        .apply {
-                            salt = attrUser[2].split(":")[0]
-                            passwordHash = attrUser[2].split(":")[1]
-                            meta = mapOf("src" to "csv")
-                        }
+                    user = registerUser(attrUser[0], attrUser[1],"1234", attrUser[2].split(":")[0], attrUser[2].split(":")[1])
                         .also { users.add(it) }
                 }else if (!attrUser[3].isNullOrBlank()){
-                    user = registerUserByPhone(attrUser[0], attrUser[3])
-                        .apply {
-                            salt = attrUser[2].split(":")[0]
-                            passwordHash = attrUser[2].split(":")[1]
-                            meta = mapOf("src" to "csv")
-                        }
+                    user = registerUserByPhone(attrUser[0], attrUser[3], attrUser[2].split(":")[0], attrUser[2].split(":")[1])
                         .also { users.add(it) }
                 }
             }catch (e: Exception){

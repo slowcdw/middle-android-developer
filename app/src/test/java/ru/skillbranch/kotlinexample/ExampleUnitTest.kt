@@ -225,6 +225,7 @@ class ExampleUnitTest {
                 " John Doe ;;[B@7fbe847c:91a3c589fd7bd0861d06b023bdaebe1c;+7 (917) 971 11-11;"
             )
             UserHolder.importUsers(users).forEach {
+                println(UserHolder.loginUser(it.login, "123456"))
                 Assert.assertNotNull(UserHolder.loginUser(it.login, "123456"))
             }
 

@@ -13,7 +13,7 @@ class User private constructor(
     private val lastName: String?,
     email: String? = null,
     rawPhone: String? = null,
-    var meta: Map<String, Any>? = null
+    meta: Map<String, Any>? = null
 ) {
 
     val userInfo : String
@@ -72,7 +72,6 @@ class User private constructor(
         println(accessCode)
         sendAccessCodeToUser(rawPhone, code)
     }
-/*
 
     constructor(
         firstName: String,
@@ -83,9 +82,9 @@ class User private constructor(
         phone: String?
     ) : this(firstName, lastName, email, rawPhone = phone, meta = mapOf("src" to "csv")){
         println("Secondary csv constructor")
-
+        passwordHash = hash
+        this@User.salt = salt
     }
-*/
 
 
     init{
@@ -154,6 +153,8 @@ class User private constructor(
         fun makeUser(
             fullName: String,
             email: String? = null,
+            salt: String?,
+            hash: String?,
             password: String? = null,
             phone: String? = null
         ): User{
@@ -161,7 +162,7 @@ class User private constructor(
             println("1. $fullName")
             println(phone)
             return when {
-//                !salt.isNullOrBlank() && !hash.isNullOrBlank() -> User(firstName, lastName, email, salt, hash, phone)
+                !salt.isNullOrBlank() && !hash.isNullOrBlank() -> User(firstName, lastName, email, salt, hash, phone)
                 !phone.isNullOrBlank() -> User(firstName,lastName,phone)
                 !email.isNullOrBlank() && !password.isNullOrBlank() -> User(firstName, lastName, email, password)
                 else -> throw IllegalArgumentException("Email or phone must be not null")
