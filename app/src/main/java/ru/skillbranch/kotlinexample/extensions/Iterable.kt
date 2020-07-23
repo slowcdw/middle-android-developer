@@ -8,4 +8,3 @@ fun <T> List<T>.dropLastUntil(predicate: (T) -> Boolean): List<T>{
         }else break
     return newList
 }
-

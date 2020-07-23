@@ -251,8 +251,8 @@ class ExampleUnitTest {
 
     @Test
     fun extList(){
-        var a = mutableListOf("qq1",2,"cdvf",4,5,6,7,8)
-        print(a.dropLastUntil{it == "cdvf"})
+        var a = mutableListOf(1,2,3,4,5,6,7,8)
+        Assert.assertEquals(mutableListOf(1 ,2,3), a.dropLastUntil{it == 4})
     }
 
 }
