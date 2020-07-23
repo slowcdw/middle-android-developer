@@ -3,6 +3,7 @@ package ru.skillbranch.kotlinexample
 import org.junit.After
 import org.junit.Assert
 import org.junit.Test
+import ru.skillbranch.kotlinexample.extentions.dropLastUntil
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.SecureRandom
@@ -246,6 +247,12 @@ class ExampleUnitTest {
             val hexString = BigInteger(1, digest).toString(16)
             return hexString.padStart(32, '0')
         }
+    }
+
+    @Test
+    fun extList(){
+        var a = mutableListOf("qq1",2,"cdvf",4,5,6,7,8)
+        print(a.dropLastUntil{it == "cdvf"})
     }
 
 }
