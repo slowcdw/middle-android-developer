@@ -3,7 +3,7 @@ package ru.skillbranch.kotlinexample
 import org.junit.After
 import org.junit.Assert
 import org.junit.Test
-import ru.skillbranch.kotlinexample.extentions.dropLastUntil
+import ru.skillbranch.kotlinexample.extensions.dropLastUntil
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.SecureRandom
@@ -251,8 +251,10 @@ class ExampleUnitTest {
 
     @Test
     fun extList(){
-        var a = mutableListOf(1,2,3,4,5,6,7,8)
-        Assert.assertEquals(mutableListOf(1 ,2,3), a.dropLastUntil{it == 4})
+        var a = listOf("az", "cdv", "bnh")
+
+
+        Assert.assertEquals(listOf("az", "cdv"), a.dropLastUntil{it == "bnh"})
     }
 
 }
