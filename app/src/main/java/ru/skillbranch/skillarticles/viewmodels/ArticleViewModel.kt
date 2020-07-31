@@ -103,7 +103,7 @@ class ArticleViewModel(val articleId: String):IArticleViewModel, BaseViewModel<A
         val info = currentState.toArticlePersonalInfo()
         repository.updateArticlePersonalInfo(info.copy(isBookmark = !info.isBookmark))
 
-        val msg = if (currentState.isBookmark) "Add to bookmark" else "Remove from bookmark"
+        val msg = if (currentState.isBookmark) "Add to bookmark" else "Remove from bookmarks"
         notify(Notify.TextMessage(msg))
     }
 
