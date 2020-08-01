@@ -132,7 +132,7 @@ class ArticleViewModel(val articleId: String):IArticleViewModel, BaseViewModel<A
 
     //not implemented
     override fun handleShare(){
-        val msg = "Shared is not implemented"
+        val msg = "Share is not implemented"
         notify(Notify.ErrorMessage(msg, "Ok", null))
     }
 
