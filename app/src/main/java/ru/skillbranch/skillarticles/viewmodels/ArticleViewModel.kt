@@ -2,8 +2,10 @@ package ru.skillbranch.skillarticles.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import ru.skillbranch.skillarticles.R
 import ru.skillbranch.skillarticles.data.ArticleData
 import ru.skillbranch.skillarticles.data.ArticlePersonalInfo
+import ru.skillbranch.skillarticles.data.longText
 import ru.skillbranch.skillarticles.data.repositories.ArticleRepository
 import ru.skillbranch.skillarticles.extensions.data.toAppSettings
 import ru.skillbranch.skillarticles.extensions.data.toArticlePersonalInfo
@@ -133,7 +135,7 @@ class ArticleViewModel(val articleId: String):IArticleViewModel, BaseViewModel<A
     //not implemented
     override fun handleShare(){
         val msg = "Share is not implemented"
-        notify(Notify.ErrorMessage(msg, "Ok", null))
+        notify(Notify.ErrorMessage(msg, "OK", null))
     }
 
     fun hideMenu(){
