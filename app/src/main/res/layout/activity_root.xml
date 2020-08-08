@@ -48,7 +48,7 @@
             android:theme="@style/ArticleBarsTheme"
             android:elevation="4dp"
             app:layout_insetEdge="bottom"
-            android:minHeight="56dp"
+            android:minHeight="60dp"
             />
 
     <com.google.android.material.appbar.MaterialToolbar
