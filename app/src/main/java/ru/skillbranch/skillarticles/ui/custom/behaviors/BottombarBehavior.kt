@@ -28,7 +28,7 @@ class BottombarBehavior : CoordinatorLayout.Behavior<Bottombar>(){
         consumed: IntArray,
         type: Int
     ) {
-        val offset = MathUtils.clamp(child.translationY + dy, 0f, 2000.toFloat())
+        val offset = MathUtils.clamp(child.translationY + dy, 0f, child.minHeight.toFloat())
         if (offset !=child.translationY) child.translationY = offset
         Log.e("M_BottombarBehavior","dy : $dy translationY : ${child.translationY}")
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type)
