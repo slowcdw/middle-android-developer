@@ -2,9 +2,13 @@ package ru.skillbranch.skillarticles.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
 import android.widget.ImageView
-import android.widget.Toolbar
+
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_root.*
@@ -16,8 +20,11 @@ import ru.skillbranch.skillarticles.viewmodels.ArticleState
 import ru.skillbranch.skillarticles.viewmodels.ArticleViewModel
 import ru.skillbranch.skillarticles.viewmodels.Notify
 import ru.skillbranch.skillarticles.viewmodels.ViewModelFactory
+import java.lang.Exception
 
 class RootActivity : AppCompatActivity() {
+    var searchTextNow : String? = null
+
 
     private lateinit var viewModel: ArticleViewModel
 
@@ -37,6 +44,11 @@ class RootActivity : AppCompatActivity() {
         viewModel.observeNotifications(this){
             renderNotification(it)
         }
+
+        searchTextNow = savedInstanceState?.getString("SEARCH_TEXT")
+
+        Log.d("M_MainActivity", "savedInstanceState: $searchTextNow")
+
 /*
         btn_like.setOnClickListener{
             Snackbar.make(coordinator_container,"test", Snackbar.LENGTH_LONG)
@@ -50,6 +62,16 @@ class RootActivity : AppCompatActivity() {
 
  */
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if(searchTextNow.isNullOrBlank()) searchTextNow = null
+        else {
+            outState?.putString("SEARCH_TEXT", searchTextNow)
+        }
+        Log.d("M_MainActivity", "SEARCH_TEXT: $searchTextNow")
+    }
+
 
     private fun setupSubmenu() {
         btn_text_up.setOnClickListener{viewModel.handleUpText()}
@@ -97,15 +119,20 @@ class RootActivity : AppCompatActivity() {
     private fun setupToolbar(){
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val logo = if (toolbar.childCount>2) toolbar.getChildAt(2) as ImageView else null
-        logo?.scaleType = ImageView.ScaleType.CENTER_CROP
-        val lp = logo?.layoutParams as? Toolbar.LayoutParams
-        lp?.let {
-            it.width = this.dpToIntPx(40)
-            it.height = this.dpToIntPx(40)
-            it.marginEnd = this.dpToIntPx(16)
-            logo.layoutParams = it
+        try {
+            val logo = if (toolbar.childCount>2) toolbar.getChildAt(2) as ImageView else null
+            logo?.scaleType = ImageView.ScaleType.CENTER_CROP
+            val lp = logo?.layoutParams as? Toolbar.LayoutParams
+            lp?.let {
+                it.width = this.dpToIntPx(40)
+                it.height = this.dpToIntPx(40)
+                it.marginEnd = this.dpToIntPx(16)
+                logo.layoutParams = it
+            }
+        }catch (e: Exception){
+
         }
+
 
     }
     private fun renderNotification(notify: Notify){
@@ -133,5 +160,40 @@ class RootActivity : AppCompatActivity() {
             }
         }
         snackbar.show()
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_search, menu)
+        val menuItem = menu?.findItem(R.id.action_search)
+        Log.d("M_MainActivity", "11111")
+        val searchView = menuItem?.actionView as SearchView
+        if (searchTextNow != null) {
+            menuItem.expandActionView();
+            searchView.setQuery(searchTextNow, false)
+            searchView.clearFocus();
+            Log.d("M_MainActivity", "setIconified")
+        }else{
+            Log.d("M_MainActivity", "222222")
+        }
+
+        searchView.queryHint = "Введите строку поиска"
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+//                viewModel.handleSearchQuery(query)
+                searchTextNow = query
+                Log.d("M_MainActivity", "onQueryTextSubmit: $searchTextNow")
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+//                viewModel.handleSearchQuery(newText)
+                searchTextNow = newText
+                Log.d("M_MainActivity", "onQueryTextSubmit: $searchTextNow")
+                return true
+            }
+
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 }
