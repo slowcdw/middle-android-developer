@@ -113,7 +113,7 @@ class ArticleSubmenu @JvmOverloads constructor(
         }
     }
 
-    override fun getBehavior(): CoordinatorLayout.Behavior<*> {
+    override fun getBehavior(): CoordinatorLayout.Behavior<ArticleSubmenu> {
         return SubmenuBehavior()
     }
 
