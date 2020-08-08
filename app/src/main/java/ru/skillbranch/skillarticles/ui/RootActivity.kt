@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.widget.Checkable
 import android.widget.ImageView
 
 import androidx.appcompat.app.AppCompatDelegate
@@ -63,6 +64,9 @@ class RootActivity : AppCompatActivity() {
  */
     }
 
+
+
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         if(searchTextNow.isNullOrBlank()) searchTextNow = null
@@ -84,6 +88,22 @@ class RootActivity : AppCompatActivity() {
         btn_bookmark.setOnClickListener{viewModel.handleBookmark()}
         btn_share.setOnClickListener{viewModel.handleShare()}
         btn_settings.setOnClickListener{viewModel.handleToggleMenu()}
+
+/*
+        btn_like.setOnClickListener{
+            it as Checkable
+            it.toggle()
+            Snackbar.make(it, if (it.isChecked) "set like" else "unset like", Snackbar.LENGTH_LONG)
+                .setAnchorView(bottombar)
+                .show()
+        }
+
+        btn_settings.setOnClickListener {
+            it as Checkable
+            it.toggle()
+            if (it.isChecked) submenu.open() else submenu.close()
+        }
+*/
     }
 
     private fun renderUi(data: ArticleState) {
