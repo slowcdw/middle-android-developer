@@ -84,12 +84,11 @@ class RootActivity : AppCompatActivity() {
     }
 
     private fun setupBottombar() {
-        btn_like.setOnClickListener{viewModel.handleLike()}
+//        btn_like.setOnClickListener{viewModel.handleLike()}
         btn_bookmark.setOnClickListener{viewModel.handleBookmark()}
         btn_share.setOnClickListener{viewModel.handleShare()}
-        btn_settings.setOnClickListener{viewModel.handleToggleMenu()}
+//        btn_settings.setOnClickListener{viewModel.handleToggleMenu()}
 
-/*
         btn_like.setOnClickListener{
             it as Checkable
             it.toggle()
@@ -103,7 +102,6 @@ class RootActivity : AppCompatActivity() {
             it.toggle()
             if (it.isChecked) submenu.open() else submenu.close()
         }
-*/
     }
 
     private fun renderUi(data: ArticleState) {

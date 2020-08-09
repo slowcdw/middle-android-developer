@@ -26,7 +26,6 @@ class SubmenuBehavior:CoordinatorLayout.Behavior<ArticleSubmenu>() {
             animate(child, dependency)
             true
         }else false
-
     }
 
     private fun animate(child: ArticleSubmenu, dependency: Bottombar){
