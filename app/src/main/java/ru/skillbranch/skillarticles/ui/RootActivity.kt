@@ -137,7 +137,7 @@ class RootActivity : AppCompatActivity() {
     private fun setupToolbar(){
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        try {
+        try {
             val logo = if (toolbar.childCount>2) toolbar.getChildAt(2) as ImageView else null
             logo?.scaleType = ImageView.ScaleType.CENTER_CROP
             val lp = logo?.layoutParams as? Toolbar.LayoutParams
@@ -147,9 +147,9 @@ class RootActivity : AppCompatActivity() {
                 it.marginEnd = this.dpToIntPx(16)
                 logo.layoutParams = it
             }
-//        }catch (e: Exception){
-//
-//        }
+        }catch (e: Exception){
+
+        }
 
 
     }
