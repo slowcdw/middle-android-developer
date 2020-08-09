@@ -48,7 +48,7 @@ class RootActivity : AppCompatActivity() {
 
         searchTextNow = savedInstanceState?.getString("SEARCH_TEXT")
 
-        Log.d("M_MainActivity", "savedInstanceState: $searchTextNow")
+//        Log.d("M_MainActivity", "savedInstanceState: $searchTextNow")
 
 /*
         btn_like.setOnClickListener{
@@ -73,7 +73,7 @@ class RootActivity : AppCompatActivity() {
         else {
             outState?.putString("SEARCH_TEXT", searchTextNow)
         }
-        Log.d("M_MainActivity", "SEARCH_TEXT: $searchTextNow")
+//        Log.d("M_MainActivity", "SEARCH_TEXT: $searchTextNow")
     }
 
 
@@ -84,12 +84,12 @@ class RootActivity : AppCompatActivity() {
     }
 
     private fun setupBottombar() {
-//        btn_like.setOnClickListener{viewModel.handleLike()}
-//        btn_bookmark.setOnClickListener{viewModel.handleBookmark()}
-//        btn_share.setOnClickListener{viewModel.handleShare()}
-//        btn_settings.setOnClickListener{viewModel.handleToggleMenu()}
+        btn_like.setOnClickListener{viewModel.handleLike()}
+        btn_bookmark.setOnClickListener{viewModel.handleBookmark()}
+        btn_share.setOnClickListener{viewModel.handleShare()}
+        btn_settings.setOnClickListener{viewModel.handleToggleMenu()}
 
-        btn_like.setOnClickListener{
+/*        btn_like.setOnClickListener{
             it as Checkable
             it.toggle()
             Snackbar.make(it, if (it.isChecked) "set like" else "unset like", Snackbar.LENGTH_LONG)
@@ -101,7 +101,7 @@ class RootActivity : AppCompatActivity() {
             it as Checkable
             it.toggle()
             if (it.isChecked) submenu.open() else submenu.close()
-        }
+        }*/
     }
 
     private fun renderUi(data: ArticleState) {
@@ -137,7 +137,7 @@ class RootActivity : AppCompatActivity() {
     private fun setupToolbar(){
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        try {
+//        try {
             val logo = if (toolbar.childCount>2) toolbar.getChildAt(2) as ImageView else null
             logo?.scaleType = ImageView.ScaleType.CENTER_CROP
             val lp = logo?.layoutParams as? Toolbar.LayoutParams
@@ -147,9 +147,9 @@ class RootActivity : AppCompatActivity() {
                 it.marginEnd = this.dpToIntPx(16)
                 logo.layoutParams = it
             }
-        }catch (e: Exception){
-
-        }
+//        }catch (e: Exception){
+//
+//        }
 
 
     }
@@ -184,15 +184,15 @@ class RootActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
         val menuItem = menu?.findItem(R.id.action_search)
-        Log.d("M_MainActivity", "11111")
+//        Log.d("M_MainActivity", "11111")
         val searchView = menuItem?.actionView as SearchView
         if (searchTextNow != null) {
             menuItem.expandActionView();
             searchView.setQuery(searchTextNow, false)
             searchView.clearFocus();
-            Log.d("M_MainActivity", "setIconified")
+//            Log.d("M_MainActivity", "setIconified")
         }else{
-            Log.d("M_MainActivity", "222222")
+//            Log.d("M_MainActivity", "222222")
         }
 
         searchView.queryHint = "Введите строку поиска"
@@ -200,14 +200,14 @@ class RootActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
 //                viewModel.handleSearchQuery(query)
                 searchTextNow = query
-                Log.d("M_MainActivity", "onQueryTextSubmit: $searchTextNow")
+//                Log.d("M_MainActivity", "onQueryTextSubmit: $searchTextNow")
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
 //                viewModel.handleSearchQuery(newText)
                 searchTextNow = newText
-                Log.d("M_MainActivity", "onQueryTextSubmit: $searchTextNow")
+//                Log.d("M_MainActivity", "onQueryTextSubmit: $searchTextNow")
                 return true
             }
 

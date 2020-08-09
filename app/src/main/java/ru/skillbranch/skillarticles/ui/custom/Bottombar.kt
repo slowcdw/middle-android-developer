@@ -14,14 +14,15 @@ class Bottombar @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr), CoordinatorLayout.AttachedBehavior {
+
+    override fun getBehavior(): CoordinatorLayout.Behavior<*> {
+        return BottombarBehavior()
+    }
+
     init {
         View.inflate(context, R.layout.layout_bottombar, this)
         val materialBg = MaterialShapeDrawable.createWithElevationOverlay(context)
         materialBg.elevation = elevation
         background = materialBg
-    }
-
-    override fun getBehavior(): CoordinatorLayout.Behavior<*> {
-        return BottombarBehavior()
     }
 }
