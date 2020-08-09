@@ -85,8 +85,8 @@ class RootActivity : AppCompatActivity() {
 
     private fun setupBottombar() {
 //        btn_like.setOnClickListener{viewModel.handleLike()}
-        btn_bookmark.setOnClickListener{viewModel.handleBookmark()}
-        btn_share.setOnClickListener{viewModel.handleShare()}
+//        btn_bookmark.setOnClickListener{viewModel.handleBookmark()}
+//        btn_share.setOnClickListener{viewModel.handleShare()}
 //        btn_settings.setOnClickListener{viewModel.handleToggleMenu()}
 
         btn_like.setOnClickListener{
